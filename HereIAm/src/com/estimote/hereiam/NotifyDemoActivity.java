@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import java.util.concurrent.TimeUnit;
 
 import static com.estimote.sdk.BeaconManager.MonitoringListener;
 
+import com.android.*;
 /**
  * Demo that shows how to use region monitoring. Two important steps are:
  * <ul>
@@ -39,6 +41,7 @@ public class NotifyDemoActivity extends Activity {
   private BeaconManager beaconManager;
   private NotificationManager notificationManager;
   private Region region;
+  private Context context;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +60,11 @@ public class NotifyDemoActivity extends Activity {
 
     beaconManager.setMonitoringListener(new MonitoringListener() {
       @Override
-      public void onEnteredRegion(Region region, List<Beacon> beacons) {
-        postNotification("Entered region");
+      public void onEnteredRegion(Region region, List<Beacon> beacons)
+      {
+    	TelephonyManager tm = (TelephonyManager) context.getSystemService(TELEPHONY_SERVICE);
+    	String phoneID = tm.getDeviceId();
+        postNotification("You have checked in");
       }
 
       @Override
