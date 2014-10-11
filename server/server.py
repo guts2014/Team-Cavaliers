@@ -19,18 +19,19 @@ import os
 import os.path
 
 
+def mkdir_p(path):
+    if not os.path.exists(path):
+        os.makedirs(path)
+
 parser = argparse.ArgumentParser(description="Run the Here I Am server")
 parser.add_argument("dataDir")
 main_args = parser.parse_args()
 
 data_dir = main_args.dataDir
 
-if not os.path.exists(data_dir):
-    print "Data dir does not exist"
-    sys.exit(1)
-
+mkdir_p(data_dir)
 classes_dir = os.path.join(data_dir, "classes")
-os.makedirs(classes_dir)
+mkdir_p(classes_dir)
 
 
 class Responder(BaseHTTPServer.BaseHTTPRequestHandler):
@@ -109,6 +110,6 @@ class Responder(BaseHTTPServer.BaseHTTPRequestHandler):
 
 
 
-server_address = ('', 12345)
+server_address = ('', 80)
 httpd = BaseHTTPServer.HTTPServer(server_address, Responder)
 httpd.serve_forever()
