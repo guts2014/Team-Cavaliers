@@ -56,7 +56,7 @@ class Responder(BaseHTTPServer.BaseHTTPRequestHandler):
             self.report_error()
 
     def list_classes(self):
-        self.send_list(os.listdir(classes_dir))
+        self.send_list(map(lambda c: "<a href=\"/list/%s\">%s</a>" % (c, c), os.listdir(classes_dir)))
 
     def create_class(self, args):
         if len(args) >= 1:
