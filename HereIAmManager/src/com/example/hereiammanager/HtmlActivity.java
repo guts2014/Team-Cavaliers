@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 
 public class HtmlActivity extends Activity {
@@ -14,10 +15,11 @@ public class HtmlActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		WebView webview = new WebView(this);
+        webview.setWebViewClient(new WebViewClient());
 
 	    Intent intent = getIntent();
 	    String ip = intent.getStringExtra(ManagerActivity.SERVER_IP);
-	
+
         webview.loadUrl("http://" + ip + "/classes");
 
 		setContentView(webview);

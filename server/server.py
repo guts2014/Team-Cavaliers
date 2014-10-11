@@ -11,6 +11,9 @@
 #
 # to register for a class:
 #    /register/<classname>/<person>
+#
+# to clear a class list:
+#    /clear/<classname>
 
 import argparse
 import BaseHTTPServer
@@ -50,6 +53,8 @@ class Responder(BaseHTTPServer.BaseHTTPRequestHandler):
                 self.list_class_members(args)
             elif cmd == "register":
                 self.register_for_class(args)
+            # elif cmd == "clear":
+            #     self.clear_class(args)
             else:
                 self.report_error()
         else:
@@ -69,7 +74,9 @@ class Responder(BaseHTTPServer.BaseHTTPRequestHandler):
     def list_class_members(self, args):
         if len(args) >= 1:
             class_name = args[0]
-            self.send_list(os.listdir(os.path.join(classes_dir, class_name)), "Everyone here in class '%s'" % class_name)
+            self.send_list(os.listdir(os.path.join(classes_dir, class_name)),
+                           "Present in %s" % class_name,
+                           "<p><a href=\"clear/%s\">Clear class</a></p>" % class_name)
         else:
             self.report_error()
 
@@ -82,13 +89,20 @@ class Responder(BaseHTTPServer.BaseHTTPRequestHandler):
         else:
             self.report_error()
 
-    def send_list(self, l, title):
+    # def clear_class(self, args):
+    #     if len(args) >= 2:
+    #         class_name = args[0]
+    #         # delete all names under class
+    #     else:
+    #         self.report_error()
+
+    def send_list(self, l, title, footer=""):
         s = "<html><head><title>%s</title></head><body><h1>%s</h1><ul>" % (title, title)
 
         for item in l:
             s += "<li>%s</li>" % item
 
-        s += "</ul></body></html>"
+        s += "</ul>%s</body></html>" % footer
         self.send_response(200)
         self.send_header("Content-type", "text/html")
         self.end_headers()
@@ -107,7 +121,6 @@ class Responder(BaseHTTPServer.BaseHTTPRequestHandler):
         self.send_header("Content-type", "text/html")
         self.end_headers()
         self.wfile.write("<html><head><title>Invalid request</title></head><body><p>%s</p></body></html>" % msg)
-
 
 
 server_address = ('', 80)
