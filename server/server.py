@@ -56,7 +56,7 @@ class Responder(BaseHTTPServer.BaseHTTPRequestHandler):
             self.report_error()
 
     def list_classes(self):
-        self.send_list(map(lambda c: "<a href=\"/list/%s\">%s</a>" % (c, c), os.listdir(classes_dir)))
+        self.send_list(map(lambda c: "<a href=\"/list/%s\">%s</a>" % (c, c), os.listdir(classes_dir)), "All classes")
 
     def create_class(self, args):
         if len(args) >= 1:
@@ -69,7 +69,7 @@ class Responder(BaseHTTPServer.BaseHTTPRequestHandler):
     def list_class_members(self, args):
         if len(args) >= 1:
             class_name = args[0]
-            self.send_list(os.listdir(os.path.join(classes_dir, class_name)))
+            self.send_list(os.listdir(os.path.join(classes_dir, class_name)), "Everyone here in class '%s'" % class_name)
         else:
             self.report_error()
 
@@ -82,13 +82,13 @@ class Responder(BaseHTTPServer.BaseHTTPRequestHandler):
         else:
             self.report_error()
 
-    def send_list(self, l):
-        s = "<html><body>"
+    def send_list(self, l, title):
+        s = "<html><head><title>%s</title></head><body><h1>%s</h1><ul>" % (title, title)
 
         for item in l:
-            s += "<p>%s</p>" % item
+            s += "<li>%s</li>" % item
 
-        s += "</body></html>"
+        s += "</ul></body></html>"
         self.send_response(200)
         self.send_header("Content-type", "text/html")
         self.end_headers()
