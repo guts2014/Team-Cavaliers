@@ -11,7 +11,7 @@ import android.widget.EditText;
 public class ManagerActivity extends Activity {
 
 	public final static String SERVER_IP = "com.example.hereiammanager.SERVER_IP";
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -36,7 +36,7 @@ public class ManagerActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	public void listAllClasses(View view) {
 		Intent intent = new Intent(this, HtmlActivity.class);
 		EditText editText = (EditText) findViewById(R.id.editIP);

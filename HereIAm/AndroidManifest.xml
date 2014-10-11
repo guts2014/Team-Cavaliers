@@ -22,7 +22,7 @@
         android:allowBackup = "true" >
         
         <activity
-            android:name=".AllDemosActivity"
+            android:name=".StudentActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>

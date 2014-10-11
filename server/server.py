@@ -11,6 +11,9 @@
 #
 # to register for a class:
 #    /register/<classname>/<person>
+#
+# to clear a class list:
+#    /clear/<classname>
 
 import argparse
 import BaseHTTPServer
@@ -19,18 +22,19 @@ import os
 import os.path
 
 
+def mkdir_p(path):
+    if not os.path.exists(path):
+        os.makedirs(path)
+
 parser = argparse.ArgumentParser(description="Run the Here I Am server")
 parser.add_argument("dataDir")
 main_args = parser.parse_args()
 
 data_dir = main_args.dataDir
 
-if not os.path.exists(data_dir):
-    print "Data dir does not exist"
-    sys.exit(1)
-
+mkdir_p(data_dir)
 classes_dir = os.path.join(data_dir, "classes")
-os.makedirs(classes_dir)
+mkdir_p(classes_dir)
 
 
 class Responder(BaseHTTPServer.BaseHTTPRequestHandler):
@@ -49,18 +53,20 @@ class Responder(BaseHTTPServer.BaseHTTPRequestHandler):
                 self.list_class_members(args)
             elif cmd == "register":
                 self.register_for_class(args)
+            # elif cmd == "clear":
+            #     self.clear_class(args)
             else:
                 self.report_error()
         else:
             self.report_error()
 
     def list_classes(self):
-        self.send_list(os.listdir(classes_dir))
+        self.send_list(map(lambda c: "<a href=\"/list/%s\">%s</a>" % (c, c), os.listdir(classes_dir)), "All classes")
 
     def create_class(self, args):
         if len(args) >= 1:
             class_name = args[0]
-            os.makedirs(os.path.join(classes_dir, class_name))
+            mkdir_p(os.path.join(classes_dir, class_name))
             self.report_success("Created class '%s'" % class_name)
         else:
             self.report_error()
@@ -68,7 +74,9 @@ class Responder(BaseHTTPServer.BaseHTTPRequestHandler):
     def list_class_members(self, args):
         if len(args) >= 1:
             class_name = args[0]
-            self.send_list(os.listdir(os.path.join(classes_dir, class_name)))
+            self.send_list(os.listdir(os.path.join(classes_dir, class_name)),
+                           "Present in %s" % class_name,
+                           "<p><a href=\"clear/%s\">Clear class</a></p>" % class_name)
         else:
             self.report_error()
 
@@ -81,13 +89,20 @@ class Responder(BaseHTTPServer.BaseHTTPRequestHandler):
         else:
             self.report_error()
 
-    def send_list(self, l):
-        s = "<html><body>"
+    # def clear_class(self, args):
+    #     if len(args) >= 2:
+    #         class_name = args[0]
+    #         # delete all names under class
+    #     else:
+    #         self.report_error()
+
+    def send_list(self, l, title, footer=""):
+        s = "<html><head><title>%s</title></head><body><h1>%s</h1><ul>" % (title, title)
 
         for item in l:
-            s += "<p>%s</p>" % item
+            s += "<li>%s</li>" % item
 
-        s += "</body></html>"
+        s += "</ul>%s</body></html>" % footer
         self.send_response(200)
         self.send_header("Content-type", "text/html")
         self.end_headers()
@@ -108,7 +123,6 @@ class Responder(BaseHTTPServer.BaseHTTPRequestHandler):
         self.wfile.write("<html><head><title>Invalid request</title></head><body><p>%s</p></body></html>" % msg)
 
 
-
-server_address = ('', 8080)
+server_address = ('', 80)
 httpd = BaseHTTPServer.HTTPServer(server_address, Responder)
 httpd.serve_forever()

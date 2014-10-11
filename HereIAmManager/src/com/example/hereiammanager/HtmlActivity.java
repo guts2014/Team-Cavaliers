@@ -1,22 +1,34 @@
 package com.example.hereiammanager;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+
 
 public class HtmlActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_manager);
+		WebView webview = new WebView(this);
+        webview.setWebViewClient(new WebViewClient());
+
+	    Intent intent = getIntent();
+	    String ip = intent.getStringExtra(ManagerActivity.SERVER_IP);
+
+        webview.loadUrl("http://" + ip + "/classes");
+
+		setContentView(webview);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.manager, menu);
+		getMenuInflater().inflate(R.menu.html, menu);
 		return true;
 	}
 
@@ -31,5 +43,4 @@ public class HtmlActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
 }

@@ -28,9 +28,10 @@ import com.android.*;
  * Demo that shows how to use region monitoring. Two important steps are:
  * <ul>
  * <li>start monitoring region, in example in {@link #onResume()}</li>
- * <li>respond to monitoring changes by registering {@link MonitoringListener} in {@link BeaconManager}</li>
+ * <li>respond to monitoring changes by registering {@link MonitoringListener}
+ * in {@link BeaconManager}</li>
  * </ul>
- *
+ * 
  * @author wiktor@estimote.com (Wiktor Gworek)
  */
 public class NotifyDemoActivity extends Activity {
@@ -129,4 +130,3 @@ public class NotifyDemoActivity extends Activity {
     TextView statusTextView = (TextView) findViewById(R.id.status);
     statusTextView.setText(msg);
   }
-}

@@ -25,7 +25,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="160dp"
         android:ems="10"
-        android:hint="Server IP address" />
+        android:hint="Server address"
+        android:text="hereiam.cjc.scot" />
 
     <Button
         android:id="@+id/buttonClasses"
