@@ -61,7 +61,7 @@ class Responder(BaseHTTPServer.BaseHTTPRequestHandler):
     def create_class(self, args):
         if len(args) >= 1:
             class_name = args[0]
-            os.makedirs(os.path.join(classes_dir, class_name))
+            mkdir_p(os.path.join(classes_dir, class_name))
             self.report_success("Created class '%s'" % class_name)
         else:
             self.report_error()
