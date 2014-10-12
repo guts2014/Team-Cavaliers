@@ -130,3 +130,4 @@ public class NotifyDemoActivity extends Activity {
     TextView statusTextView = (TextView) findViewById(R.id.status);
     statusTextView.setText(msg);
   }
+}
