@@ -100,7 +100,7 @@ class Responder(BaseHTTPServer.BaseHTTPRequestHandler):
         s = "<html><head><title>%s</title></head><body><h1>%s</h1><ul>" % (title, title)
 
         for item in l:
-            s += "<li>%s</li>" % item
+            s += "<li style=\"font-size:3em\">%s</li>" % item
 
         s += "</ul>%s</body></html>" % footer
         self.send_response(200)
