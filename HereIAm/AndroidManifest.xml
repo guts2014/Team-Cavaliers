@@ -29,22 +29,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
-        <activity android:name="com.estimote.hereiam.ListBeaconsActivity"
-        		  android:label="Select Beacon"
-        		  android:screenOrientation="portrait"/>
-
-    	<activity android:name="com.estimote.hereiam.DistanceBeaconActivity"
-              	  android:label="Distance Demo"
-              	  android:screenOrientation="portrait"/>
-
-    	<activity android:name="com.estimote.hereiam.NotifyDemoActivity"
-              	  android:label="Notify Demo"
-              	  android:screenOrientation="portrait"/>
-
-    	<activity android:name="com.estimote.hereiam.CharacteristicsDemoActivity"
-                  android:label="Characteristics Demo"
-              	  android:screenOrientation="portrait"/>
 
 	    <!-- Estimote service responsible for scanning beacons. -->
 	    <service android:name="com.estimote.sdk.service.BeaconService"
