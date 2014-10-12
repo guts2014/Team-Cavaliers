@@ -112,7 +112,7 @@ class Responder(BaseHTTPServer.BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-type", "text/html")
         self.end_headers()
-        self.wfile.write("<html><head><title>Success</title></head><body>%s</body></html>" % s)
+        self.wfile.write("<html><head><title>Success</title></head><body><p style=\"font-size:2.5em\">%s</body></html>" % s)
 
     def report_error(self):
         msg = "Invalid request: %s" % self.path
