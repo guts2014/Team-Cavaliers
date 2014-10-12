@@ -75,8 +75,8 @@ class Responder(BaseHTTPServer.BaseHTTPRequestHandler):
         if len(args) >= 1:
             class_name = args[0]
             self.send_list(os.listdir(os.path.join(classes_dir, class_name)),
-                           "Present in %s" % class_name,
-                           "<p><a href=\"clear/%s\">Clear class</a></p>" % class_name)
+                           "Present in %s" % class_name)
+                           # "<p><a href=\"clear/%s\">Clear class</a></p>" % class_name)
         else:
             self.report_error()
 
@@ -97,10 +97,10 @@ class Responder(BaseHTTPServer.BaseHTTPRequestHandler):
     #         self.report_error()
 
     def send_list(self, l, title, footer=""):
-        s = "<html><head><title>%s</title></head><body><h1>%s</h1><ul>" % (title, title)
+        s = "<html><head><title>%s</title></head><body><h1 style=\"font-size:3em\">%s</h1><ul>" % (title, title)
 
         for item in l:
-            s += "<li style=\"font-size:3em\">%s</li>" % item
+            s += "<li style=\"font-size:2.5em\">%s</li>" % item
 
         s += "</ul>%s</body></html>" % footer
         self.send_response(200)
