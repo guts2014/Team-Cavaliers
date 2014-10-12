@@ -1,7 +1,7 @@
-HereIAm -- Beacon-Based Class Attendance Solution
+HereIAm - Beacon-Based Class Attendance Solution
 =================================================
 
-Have a beacon in your class, and when the students come in range, they can sign in on their phones (except the beacon but doesn't quite work yet...).
+Have a beacon in your class, and when the students come in range, they can sign in on their phones (except the beacon bit doesn't quite work yet...).
 
 Three parts:
  - Android app for students (requires Android 4.3+)
